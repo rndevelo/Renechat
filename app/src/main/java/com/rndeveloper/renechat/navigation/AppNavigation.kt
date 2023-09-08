@@ -5,7 +5,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.rndeveloper.renechat.ui.chatscreen.ChatScreen
+import com.rndeveloper.renechat.ui.chat.screen.ChatScreen
+import com.rndeveloper.renechat.ui.login.screen.LoginScreen
 
 @Composable
 fun AppNavigation() {
@@ -13,10 +14,13 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.Chat.routes
+        startDestination = Routes.Login.routes
     ) {
+        composable(route = Routes.Login.routes) {
+            LoginScreen(navController = navController)
+        }
         composable(route = Routes.Chat.routes) {
-            ChatScreen()
+            ChatScreen(navController = navController)
         }
     }
 }

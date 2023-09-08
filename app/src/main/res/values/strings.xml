@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Renechat</string>
+
+    <!-- LOGIN-->
+    <string name="login_text_app_title">Film Family</string>
+    <string name="login_text_app_subtitle">Shared your films with your family and friends</string>
+    <string name="login_text_field_email">Enter your email</string>
+    <string name="login_text_field_password">Enter your password</string>
+    <string name="login_text_button">Login</string>
+    <string name="register_text_button">Register</string>
+    <string name="login_text_sign_in_with_google">Sign in with Google</string>
+    <string name="login_icon_google">Google Logo</string>
+    <string name="login_text_no_account">Don\'t have an account?</string>
+    <string name="login_text_yes_account">Do you have an account?</string>
+    <string name="login_text_sign_up">Sign up</string>
+    <string name="login_text_sign_in">Sign in</string>
+    <string name="login_text_forgot_your_password">Forgot your password?</string>
+    <string name="gcp_id"></string>
+
+    <!-- WEB-->
+    <string name="WEB_ID_CLIENT">270023958664-e5451pqi8rb2o993vq2k7t2jmm1n02ma.apps.googleusercontent.com</string>
+
 </resources>

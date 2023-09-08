@@ -1,6 +1,5 @@
 package com.rndeveloper.renechat.repositories
 
-import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.rndeveloper.renechat.model.Message
 import kotlinx.coroutines.channels.awaitClose
@@ -9,18 +8,16 @@ import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
 
 class ChatRepositoryImpl @Inject constructor(
-    private val fireStore: FirebaseFirestore
+    fireStore: FirebaseFirestore
 ) : ChatRepository {
+
+    private val documentReference = fireStore.collection("chat").document("messages").collection("puta")
 
     override fun getMessages(): Flow<Result<List<Message>>> =
         callbackFlow {
-            fireStore.collection("messages")
-                .addSnapshotListener { snapshot, e ->
-                    if (snapshot != null) {
-                        val items = snapshot.toObjects(Message::class.java)
-                        items.forEach { item ->
-                            Log.d("MESSAGE", "getMessagesRepo: $item")
-                        }
+            documentReference.addSnapshotListener { snapshot, e ->
+                    val items = snapshot?.toObjects(Message::class.java)
+                    if (items != null) {
                         trySend(Result.success(items))
 //                        close()
                     } else {
@@ -35,8 +32,8 @@ class ChatRepositoryImpl @Inject constructor(
 
     override fun setMessage(message: Message): Flow<Result<Void>> =
         callbackFlow {
-            val tag = fireStore.collection("messages").document().id
-            fireStore.collection("messages").document(tag).set(message)
+            val tag = documentReference.document().id
+            documentReference.document(tag).set(message)
                 .addOnSuccessListener {
                     trySend(Result.success(it))
                     close()
