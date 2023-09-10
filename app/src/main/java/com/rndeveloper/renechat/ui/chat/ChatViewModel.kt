@@ -2,6 +2,7 @@ package com.rndeveloper.renechat.ui.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.rndeveloper.renechat.ChatUiState
 import com.rndeveloper.renechat.ChatUseCase
 import com.rndeveloper.renechat.model.Message
@@ -20,7 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
-    private val chatRepository: ChatRepository
+    private val chatRepository: ChatRepository,
+    private val firebaseAuth: FirebaseAuth
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ChatUiState())
@@ -30,9 +32,11 @@ class ChatViewModel @Inject constructor(
         initialValue = ChatUiState()
     )
 
-    init {
+    fun getUid() = firebaseAuth.uid
+
+    fun getMessages(myUid: String, otherUid: String){
         viewModelScope.launch {
-            chatUseCase("" to "").collectLatest { result ->
+            chatUseCase(myUid to otherUid).collectLatest { result ->
                 _state.update { chatState ->
                     chatState.copy(messages = result.messages)
                 }
@@ -40,9 +44,9 @@ class ChatViewModel @Inject constructor(
         }
     }
 
-    fun setMessage(message: Message) {
+    fun setMessage(myUid: String, otherUid: String, message: Message) {
         viewModelScope.launch {
-            chatRepository.setMessage(message).collectLatest {
+            chatRepository.setMessage(myUid, otherUid, message).collectLatest {
                 _state.update {
 //                    Log.d("MESSAGE", "updateViewModel: ${it.text}")
                     it

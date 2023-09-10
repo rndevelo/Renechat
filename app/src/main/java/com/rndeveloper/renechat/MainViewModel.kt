@@ -18,6 +18,7 @@ class MainViewModel @Inject constructor(): ViewModel() {
     init {
         viewModelScope.launch {
             delay(100)
+            _isLoading.value = false
         }
     }
 

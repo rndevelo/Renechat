@@ -41,7 +41,6 @@ import androidx.navigation.NavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.tasks.Task
-import com.rndeveloper.renechat.MainViewModel
 import com.rndeveloper.renechat.R
 import com.rndeveloper.renechat.navigation.Routes
 import com.rndeveloper.renechat.ui.login.LoginUiState
@@ -53,8 +52,7 @@ import com.rndeveloper.renechat.ui.theme.RenechatTheme
 @Composable
 fun LoginScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel(),
-    mainViewModel: MainViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val loginUiState by viewModel.state.collectAsStateWithLifecycle()
@@ -90,14 +88,12 @@ fun LoginScreen(
             contentAlignment = Alignment.Center
         ) {
             if (loginUiState.isLogged) {
-                mainViewModel.hideSplashScreen()
-                navController.navigate(Routes.Chat.routes) {
+                navController.navigate(Routes.UsersList.routes) {
                     popUpTo(Routes.Login.routes) {
                         inclusive = true
                     }
                 }
             }else{
-                mainViewModel.hideSplashScreen()
                 LoginContent(
                     loginUiState = loginUiState,
                     onClickLogin = viewModel::loginOrRegister,

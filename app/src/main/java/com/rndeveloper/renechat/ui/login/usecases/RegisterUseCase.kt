@@ -87,8 +87,9 @@ class RegisterUseCase @Inject constructor(
                                         LoginUiState().copy(
                                             screenState = LoginScreenState.Register(),
                                             userData = UserData(
-                                                email = email,
-                                                pass = pass
+                                                email = "",
+                                                pass = "",
+                                                username = "",
                                             ),
                                             isLogged = authResult.user != null,
                                             isLoading = false

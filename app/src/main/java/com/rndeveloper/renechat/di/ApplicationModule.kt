@@ -6,6 +6,8 @@ import com.rndeveloper.renechat.repositories.ChatRepository
 import com.rndeveloper.renechat.repositories.ChatRepositoryImpl
 import com.rndeveloper.renechat.repositories.LoginRepository
 import com.rndeveloper.renechat.repositories.LoginRepositoryImpl
+import com.rndeveloper.renechat.repositories.UsersListRepository
+import com.rndeveloper.renechat.repositories.UsersListRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +20,16 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideLoginRepository(firebaseAuth: FirebaseAuth): LoginRepository =
-        LoginRepositoryImpl(firebaseAuth = firebaseAuth)
+    fun provideLoginRepository(firebaseAuth: FirebaseAuth, fireStore: FirebaseFirestore): LoginRepository =
+        LoginRepositoryImpl(firebaseAuth = firebaseAuth, fireStore = fireStore)
 
     @Singleton
     @Provides
-    fun provideChatRepository(fireStore: FirebaseFirestore): ChatRepository =
-        ChatRepositoryImpl(fireStore = fireStore)
+    fun provideChatRepository(firebaseAuth: FirebaseAuth, fireStore: FirebaseFirestore): ChatRepository =
+        ChatRepositoryImpl(firebaseAuth = firebaseAuth, fireStore = fireStore)
+    @Singleton
+    @Provides
+    fun provideUsersListRepository(fireStore: FirebaseFirestore): UsersListRepository =
+        UsersListRepositoryImpl(fireStore = fireStore)
+
 }

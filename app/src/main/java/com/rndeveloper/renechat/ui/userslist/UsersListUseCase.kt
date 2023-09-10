@@ -1,28 +1,28 @@
-package com.rndeveloper.renechat
+package com.rndeveloper.renechat.ui.userslist
 
-import com.rndeveloper.renechat.repositories.ChatRepository
+import com.rndeveloper.renechat.BaseUseCase
+import com.rndeveloper.renechat.repositories.UsersListRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
-class ChatUseCase @Inject constructor(
-    private val repository: ChatRepository,
-) : BaseUseCase<Pair<String, String>, Flow<ChatUiState>>() {
+class UsersListUseCase @Inject constructor(
+    private val repository: UsersListRepository,
+) : BaseUseCase<Pair<String, String>, Flow<UsersListUiState>>() {
 
-    override suspend fun execute(parameters: Pair<String, String>): Flow<ChatUiState> =
+    override suspend fun execute(parameters: Pair<String, String>): Flow<UsersListUiState> =
         channelFlow {
 
             // TODO: Validate fields: email restriction and empty fields validations
 
             // Loading
-            send(ChatUiState().copy(isLoading = true))
-            val (myUid, otherUid) = parameters
+            send(UsersListUiState().copy(isLoading = true))
 
             // TODO: Fields validations
 
             // Do login if fields are valid
-            repository.getMessages(myUid, otherUid)
+            repository.getUsers()
 //            .catch { exception ->
 //                send(
 //                    Message()
@@ -31,10 +31,10 @@ class ChatUseCase @Inject constructor(
 //            }
                 .collectLatest { result ->
                     result.fold(
-                        onSuccess = { sms ->
-                            val chatUiState =
-                                ChatUiState().copy(messages = sms.sortedBy { it.time }.reversed())
-                            trySend(chatUiState)
+                        onSuccess = { users ->
+                            val usersListUiState =
+                                UsersListUiState().copy(users = users)
+                            trySend(usersListUiState)
                         },
                         onFailure = {}
                     )

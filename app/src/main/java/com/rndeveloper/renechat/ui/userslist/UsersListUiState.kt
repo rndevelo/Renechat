@@ -1,20 +1,18 @@
-package com.rndeveloper.renechat
+package com.rndeveloper.renechat.ui.userslist
 
+import com.rndeveloper.renechat.BaseUiState
 import com.rndeveloper.renechat.exceptions.CustomException
-import com.rndeveloper.renechat.model.Message
+import com.rndeveloper.renechat.model.UserData
 
-data class ChatUiState(
-//    val screenState: LoginScreenState,
-    val messages: List<Message>?,
+data class UsersListUiState(
+    val users: List<UserData>?,
     override val isLoading: Boolean,
     override val errorMessage: CustomException?,
 ) : BaseUiState(isLoading, errorMessage) {
 
     constructor() : this(
-//        screenState = LoginScreenState.Login,
-        messages = emptyList(),
+        users = emptyList(),
         isLoading = false,
         errorMessage = null,
     )
 }
-

@@ -20,7 +20,9 @@ data class LoginUiState(
         screenState = LoginScreenState.Login(),
         userData = UserData(
             email = "",
-            pass = ""
+            pass = "",
+            username = "",
+            chats = emptyList()
         ),
         emailErrorMessage = null,
         passErrorMessage = null,

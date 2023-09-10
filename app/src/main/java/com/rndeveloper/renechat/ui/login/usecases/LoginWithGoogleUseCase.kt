@@ -40,8 +40,9 @@ class LoginWithGoogleUseCase @Inject constructor(
                             LoginUiState().copy(
                                 screenState = LoginScreenState.Login(),
                                 userData = UserData(
-                                    email = authResult.user?.email ?: "",
-                                    pass = ""
+                                    email = "",
+                                    pass = "",
+                                    username = "",
                                 ),
                                 isLogged = authResult.user != null,
                                 isLoading = false

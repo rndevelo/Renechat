@@ -83,8 +83,9 @@ class LoginEmailPassUseCase @Inject constructor(
                                         LoginUiState().copy(
                                             screenState = LoginScreenState.Login(),
                                             userData = UserData(
-                                                email = email,
-                                                pass = pass
+                                                email = "",
+                                                pass = "",
+                                                username = "",
                                             ),
                                             isLogged = authResult.user != null,
                                             isLoading = false
