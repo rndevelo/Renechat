@@ -23,12 +23,14 @@ class ChatUseCase @Inject constructor(
 
             // Do login if fields are valid
             repository.getMessages(myUid, otherUid)
-//            .catch { exception ->
-//                send(
-//                    Message()
-//                    LoginUiState().copy(hasError = true, errorMessage = exception.message ?: "Login Error")
-//                )
-//            }
+//                .catch { exception ->
+//                    send(
+//                        ChatUiState().copy(
+//                            hasError = true,
+//                            errorMessage = exception.message ?: "Login Error"
+//                        )
+//                    )
+//                }
                 .collectLatest { result ->
                     result.fold(
                         onSuccess = { sms ->

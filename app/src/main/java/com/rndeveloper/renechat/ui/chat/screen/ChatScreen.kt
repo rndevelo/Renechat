@@ -72,7 +72,7 @@ fun ChatScreen(
             CircularProgressIndicator()
         }
         ChatContent(
-            myUid = chatViewModel.getUid().toString(),
+            myUid = myUid,
             chatUiState = chatUiState,
             modifier = Modifier
                 .padding(innerPadding)

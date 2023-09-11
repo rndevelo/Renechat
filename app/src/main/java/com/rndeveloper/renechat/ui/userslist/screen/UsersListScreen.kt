@@ -18,6 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.rndeveloper.renechat.ui.appuicomponents.TopBar
+import com.rndeveloper.renechat.ui.chat.ChatViewModel
 import com.rndeveloper.renechat.ui.theme.RenechatTheme
 import com.rndeveloper.renechat.ui.userslist.UsersListViewModel
 import com.rndeveloper.renechat.ui.userslist.screen.components.UserItem
@@ -26,10 +27,12 @@ import com.rndeveloper.renechat.ui.userslist.screen.components.UserItem
 @Composable
 fun UsersListScreen(
     navController: NavController,
-    usersListViewModel: UsersListViewModel = hiltViewModel()
+    usersListViewModel: UsersListViewModel = hiltViewModel(),
+    chatViewModel: ChatViewModel = hiltViewModel(),
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val usersListState by usersListViewModel.state.collectAsStateWithLifecycle()
+    val chatState by chatViewModel.state.collectAsStateWithLifecycle()
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackBarHostState) },
@@ -45,7 +48,8 @@ fun UsersListScreen(
                     UserItem(
                         navController = navController,
                         myUid = usersListViewModel.myUid(),
-                        item = user
+                        item = user,
+                        getMessages = chatViewModel::getMessages
                     )
                 }
             }

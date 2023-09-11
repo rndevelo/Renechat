@@ -49,6 +49,7 @@ class ChatRepositoryImpl @Inject constructor(
                 fireStore.collection("chats")
                     .document("${list.first()}x${list.last()}")
                     .collection("chat")
+
             val tag = documentReference.document().id
             documentReference.document(tag).set(message)
                 .addOnSuccessListener {

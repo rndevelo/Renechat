@@ -2,7 +2,6 @@ package com.rndeveloper.renechat.ui.chat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseAuth
 import com.rndeveloper.renechat.ChatUiState
 import com.rndeveloper.renechat.ChatUseCase
 import com.rndeveloper.renechat.model.Message
@@ -21,8 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ChatViewModel @Inject constructor(
     private val chatUseCase: ChatUseCase,
-    private val chatRepository: ChatRepository,
-    private val firebaseAuth: FirebaseAuth
+    private val chatRepository: ChatRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ChatUiState())
@@ -31,8 +29,6 @@ class ChatViewModel @Inject constructor(
         started = SharingStarted.Eagerly,
         initialValue = ChatUiState()
     )
-
-    fun getUid() = firebaseAuth.uid
 
     fun getMessages(myUid: String, otherUid: String){
         viewModelScope.launch {
